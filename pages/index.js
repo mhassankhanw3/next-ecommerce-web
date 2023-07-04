@@ -18,8 +18,8 @@ export default function Home() {
           </h2>
         </div>
         <div className="flex items-center rounded-md bg-gray-100">
-          <Image
-            className="w-8 h-8 mr-2 img rounded-l-md "
+          <img
+            className="w-8 h-8 mr-2 rounded-l-md "
             src={session?.user?.image}
             alt=""
           />

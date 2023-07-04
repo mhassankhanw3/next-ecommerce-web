@@ -8,7 +8,7 @@ img {
 }
 
 h1 {
-  @apply text-blue-900 font-semibold text-2xl mb-4;
+  @apply text-blue-900 font-semibold text-4xl mb-4 underline;
 }
 input,
 textarea {
@@ -26,14 +26,15 @@ label {
 }
 
 .btn-primary {
-  @apply mt-2 bg-blue-900 text-gray-200 rounded-md px-4 py-1 text-center text-[16px] hover:bg-blue-950 transition-all;
+  @apply bg-blue-900 text-gray-200 rounded-md px-4 py-1 text-center text-[16px] hover:bg-blue-950 transition-all;
 }
 
 table.basic {
   @apply w-full mt-6;
 }
+
 table.basic thead tr td {
-  @apply bg-blue-900 text-gray-200;
+  @apply bg-blue-900 text-gray-200 py-2 px-1;
 }
 table.basic tr td {
   @apply border border-gray-400 p-1;
@@ -48,7 +49,4 @@ table.basic a:hover {
   @apply bg-red-700 transition-all;
 }
 
-
-
 /* ===================== Spinner =============== */
-
