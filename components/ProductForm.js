@@ -5,6 +5,7 @@ import axios from "axios";
 import Link from "next/link";
 import { Spin } from "antd";
 import Spinner from "./Spinner";
+import Image from "next/image";
 
 export default function ProductForm({
   _id,
@@ -69,10 +70,10 @@ export default function ProductForm({
         {!!images?.length &&
           images.map((link) => (
             <div key={link} className="h-24">
-              <img
+              <Image
                 src={link}
                 alt=""
-                className="rounded-lg  border border-gray-300 border-dashed "
+                className="rounded-lg img border border-gray-300 border-dashed "
               />
             </div>
           ))}

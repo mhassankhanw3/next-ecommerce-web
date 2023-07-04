@@ -1,6 +1,7 @@
 import { useSession, signIn, signOut } from "next-auth/react";
 import Nav from "../components/Nav";
 import Layout from "../components/Layout";
+import Image from "next/image";
 
 export default function Home() {
   const { data: session } = useSession();
@@ -17,8 +18,8 @@ export default function Home() {
           </h2>
         </div>
         <div className="flex items-center rounded-md bg-gray-100">
-          <img
-            className="w-8 h-8 mr-2 rounded-l-md "
+          <Image
+            className="w-8 h-8 mr-2 img rounded-l-md "
             src={session?.user?.image}
             alt=""
           />
