@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Layout from "./Layout";
 import { useRouter } from "next/router";
 import axios from "axios";
@@ -7,6 +7,7 @@ import { Spin } from "antd";
 import Spinner from "./Spinner";
 import { ReactSortable } from "react-sortablejs";
 import { Toaster, toast } from "react-hot-toast";
+import { AiOutlineCloudUpload } from "react-icons/ai";
 
 export default function ProductForm({
   _id,
@@ -14,6 +15,7 @@ export default function ProductForm({
   desc: existingDesc,
   price: existingPrice,
   images: existingImages,
+  selectCategory: assignedCategory,
 }) {
   const [title, setTitle] = useState(existingTitle || "");
   const [desc, setDesc] = useState(existingDesc || "");
@@ -21,9 +23,16 @@ export default function ProductForm({
   const [images, setImages] = useState(existingImages || []);
   const [goToProducts, setGoToProducts] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [categoriesData, setCategoriesData] = useState([]);
+  const [selectCategory, setSelectCategory] = useState(assignedCategory || "");
   const router = useRouter();
 
-  console.log({ _id });
+  useEffect(() => {
+    axios.get("/api/category").then((res) => {
+      setCategoriesData(res.data);
+    });
+  }, []);
 
   // const saveProduct = async (e) => {
   //   e.preventDefault();
@@ -40,7 +49,7 @@ export default function ProductForm({
 
   const saveProduct = (e) => {
     e.preventDefault();
-    const data = { title, desc, price, images };
+    const data = { title, desc, price, images, selectCategory };
 
     const savePromise = _id
       ? axios.put("/api/products", { ...data, _id })
@@ -97,16 +106,27 @@ export default function ProductForm({
       for (const file of files) {
         data.append("file", file);
       }
+      const uploadPromise = axios.post("/api/upload", data);
+
       try {
-        const res = await axios.post("/api/upload", data);
-        setImages((oldImages) => {
-          return [...oldImages, ...res.data.links];
+        toast.promise(uploadPromise, {
+          loading: "Uploading...",
+          success: "Image uploaded successfully!",
+          error: "Failed to upload image.",
         });
+
+        const res = await uploadPromise;
+        setImages((oldImages) => [...oldImages, ...res.data.links]);
         setIsUploading(false);
-        toast.success("Image Uploaded!", { duration: 1000 });
       } catch (error) {
+        console.log(error, "image uploading error");
         setIsUploading(false);
-        toast.error("Image Upload failed!", { duration: 1000 });
+        setTimeout(() => {
+          toast("Something went wrong with your image!", {
+            icon: "❌",
+            duration: 4000,
+          });
+        }, 4000);
       }
     }
   };
@@ -117,6 +137,7 @@ export default function ProductForm({
 
   return (
     <form onSubmit={saveProduct}>
+      <Toaster />
       <label>Product Name</label>
       <input
         type="text"
@@ -124,6 +145,26 @@ export default function ProductForm({
         value={title}
         onChange={(e) => setTitle(e.target.value)}
       />
+      <div className="flex flex-col mb-4 ">
+        <label>Category</label>
+        <select
+          value={selectCategory}
+          onChange={(e) => setSelectCategory(e.target.value)}
+          className="max-w-md mt-1 py-2 px-2 rounded-lg bg-gray-100 border border-gray-300 focus:bg-gray-50 focus:outline-none focus:border-blue-900 "
+        >
+          <option value="0">Uncategorized</option>
+          {categoriesData.length > 0 &&
+            categoriesData.map((category) => (
+              <option
+                className="text-gray-700 px-3 py-3"
+                value={category?._id}
+                key={category._id}
+              >
+                {category?.categoryName}
+              </option>
+            ))}
+        </select>
+      </div>
       <label>Photos</label>
       <div
         className={`flex flex-wrap items-center ${
@@ -139,9 +180,13 @@ export default function ProductForm({
             images.map((link) => (
               <div key={link} className="h-24">
                 <img
-                  src={link}
+                  src={
+                    link
+                      ? link
+                      : "https://www.generationsforpeace.org/wp-content/uploads/2018/03/empty.jpg"
+                  }
                   alt=""
-                  className="rounded-lg  border border-gray-300 border-dashed "
+                  className="rounded-lg "
                 />
               </div>
             ))}
@@ -152,21 +197,11 @@ export default function ProductForm({
             <Spinner />
           </div>
         )}
-        <label className="w-24 h-24 rounded-md bg-gray-50 text-black font-normal text-[16px] hover:bg-gray-100 hover:text-blue-600 gap-1 transition-all flex items-center justify-center cursor-pointer ">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth={1.5}
-            stroke="currentColor"
-            className="w-5 h-5"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5"
-            />
-          </svg>
+        <label className="label w-24 h-24 rounded-md bg-gray-50 text-black font-normal text-[16px] hover:bg-gray-100 hover:text-blue-600 gap-1 transition-all flex items-center justify-center cursor-pointer ">
+          <span>
+            {" "}
+            <AiOutlineCloudUpload className="text-[20px] text-gray-600 icon " />
+          </span>
           Uplaod
           <input type="file" onChange={uploadImages} className="hidden" />
         </label>
@@ -187,8 +222,19 @@ export default function ProductForm({
         value={price}
         onChange={(e) => setPrice(e.target.value)}
       />
+      {(!title || !selectCategory || !desc || !price) && (
+        <p className="text-red-600">All Fields are required!</p>
+      )}
       <div className="flex items-center gap-2 mt-2 ">
-        <button type="submit" className="btn-primary ">
+        <button
+          disabled={!title || !selectCategory || !desc || !price}
+          style={{
+            backgroundColor:
+              !title || !selectCategory || !desc || !price ? "#9ca3af" : "",
+          }}
+          type="submit"
+          className="btn-primary "
+        >
           save
         </button>
         <Link

@@ -12,14 +12,14 @@ h1 {
 }
 input,
 textarea {
-  @apply w-full border-2 border-gray-300 bg-gray-100 rounded-md px-1 py-1;
+  @apply w-full border border-gray-300 bg-gray-100 rounded-md px-2 py-1;
   @apply mb-2;
 }
 
 input:focus,
 textarea:focus {
-  @apply border-blue-800;
-  @apply border-blue-800 outline-none;
+  @apply border-blue-800 bg-gray-50;
+  @apply border-blue-800 outline-none bg-gray-50;
 }
 label {
   @apply text-blue-900 font-medium text-[18px];
@@ -47,6 +47,11 @@ table.basic a:nth-child(1):hover {
 }
 table.basic a:hover {
   @apply bg-red-700 transition-all;
+}
+
+.label:hover .icon {
+  color: #2563eb;
+  transition: 0.2s;
 }
 
 /* ===================== Spinner =============== */
