@@ -51,7 +51,7 @@ table.basic a:hover {
 
 .label:hover .icon {
   color: #2563eb;
-  transition: 0.2s;
+  transition: 0.3s;
 }
 
 /* ===================== Spinner =============== */
