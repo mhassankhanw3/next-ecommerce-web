@@ -16,6 +16,7 @@ export default function ProductForm({
   price: existingPrice,
   images: existingImages,
   selectCategory: assignedCategory,
+  properties: assignedProperties,
 }) {
   const [title, setTitle] = useState(existingTitle || "");
   const [desc, setDesc] = useState(existingDesc || "");
@@ -26,6 +27,9 @@ export default function ProductForm({
   const [loading, setLoading] = useState(false);
   const [categoriesData, setCategoriesData] = useState([]);
   const [selectCategory, setSelectCategory] = useState(assignedCategory || "");
+  const [productProperties, setProductProperties] = useState(
+    assignedProperties || {}
+  );
   const router = useRouter();
 
   useEffect(() => {
@@ -49,7 +53,14 @@ export default function ProductForm({
 
   const saveProduct = (e) => {
     e.preventDefault();
-    const data = { title, desc, price, images, selectCategory };
+    const data = {
+      title,
+      desc,
+      price,
+      images,
+      selectCategory,
+      properties: productProperties,
+    };
 
     const savePromise = _id
       ? axios.put("/api/products", { ...data, _id })
@@ -135,6 +146,27 @@ export default function ProductForm({
     setImages(images);
   };
 
+  const setProductProp = (propName, value) => {
+    setProductProperties((prev) => {
+      const newProductProp = { ...prev };
+      newProductProp[propName] = value;
+      return newProductProp;
+    });
+  };
+
+  const propertiesToFill = [];
+  if (categoriesData.length > 0 && selectCategory) {
+    let cateInfo = categoriesData.find(({ _id }) => _id === selectCategory);
+    propertiesToFill.push(...cateInfo.properties);
+    while (cateInfo?.parentCategory?._id) {
+      let parentCate = categoriesData.find(
+        ({ _id }) => _id === cateInfo?.parentCategory?._id
+      );
+      propertiesToFill.push(...parentCate.properties);
+      cateInfo = parentCate;
+    }
+  }
+
   return (
     <form onSubmit={saveProduct}>
       <Toaster />
@@ -165,6 +197,28 @@ export default function ProductForm({
             ))}
         </select>
       </div>
+
+      <div className="flex items-center gap-4">
+        {propertiesToFill.length > 0 &&
+          propertiesToFill.map((v) => {
+            console.log(v, "v");
+            return (
+              <div>
+                <span className="font-medium block">{v?.name}:</span>
+                <select
+                  value={productProperties[v?.name]}
+                  onChange={(e) => setProductProp(v?.name, e.target.value)}
+                  className="max-w-full w-[300px] py-2 px-2 rounded-lg bg-gray-100 border border-gray-300 focus:bg-gray-50 focus:outline-none focus:border-blue-900 "
+                >
+                  {v.values.map((i) => (
+                    <option value={i}>{i}</option>
+                  ))}
+                </select>
+              </div>
+            );
+          })}
+      </div>
+
       <label>Photos</label>
       <div
         className={`flex flex-wrap items-center ${

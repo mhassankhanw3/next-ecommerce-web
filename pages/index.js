@@ -18,12 +18,10 @@ export default function Home() {
           </h2>
         </div>
         <div className="flex items-center rounded-md bg-gray-100">
-          <Image
+          <img
             className="w-8 h-8 mr-2 rounded-l-md"
             src={session?.user?.image}
             alt=""
-            width={8}
-            height={8}
           />
           <span className="text-gray-800 font-medium mr-2">
             {session?.user?.name}
