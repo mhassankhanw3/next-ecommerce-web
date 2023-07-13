@@ -19,53 +19,48 @@ export default function Products() {
   return (
     <Layout>
       <Link
-        className="bg-blue-900 hover:bg-blue-950 transition-all text-gray-100 rounded-md px-3 py-2 "
+        className="bg-indigo-600 hover:bg-indigo-700 shadow-md hover:shadow-lg transition-all text-gray-200 rounded-md px-3 py-2"
         href={"/products/new"}
       >
         Add new Products
       </Link>
-      <h3 className="mt-1 text-[20px] text-gray-700 ">
-        If You are new on our ecommerce go to, Add new products.
+      <h3 className="mt-2 text-[16px] text-gray-600 md:text-xl">
+        If you are new to our ecommerce site, go to &quot;Add new
+        products&quot;.
       </h3>
-      <div className="bg-white shadow-lg overflow-hidden sm:rounded-lg mt-6 ">
+      <div className="bg-white shadow-lg overflow-hidden rounded-lg mt-6">
         <table className="min-w-full divide-y divide-gray-200">
-          <thead className="bg-blue-900">
+          <thead className="bg-indigo-700">
             <tr>
-              <th
-                scope="col"
-                className="px-6 py-3 text-left text-xs font-medium text-gray-100 uppercase tracking-wider border-r border-gray-400"
-              >
-                Products Name
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-100 uppercase tracking-wider border-r border-gray-300">
+                Product Name
               </th>
-              <th
-                scope="col"
-                className="px-6 py-3 text-left text-xs font-medium text-gray-100 uppercase tracking-wider"
-              >
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-100 uppercase tracking-wider">
                 Actions
               </th>
             </tr>
           </thead>
-          <tbody className="bg-gray-100 divide-y divide-gray-300 ">
+          <tbody className="bg-gray-100 divide-y divide-gray-300">
             {getProducts.length > 0 ? (
               getProducts.map((i) => (
                 <tr key={i?._id} className="">
-                  <td className="px-6 py-3 border-r border-gray-400">
+                  <td className="px-6 py-3 border-r border-gray-300">
                     {i?.title}
                   </td>
-                  <td className="ml-2 py-3 flex items-center gap-1 ">
+                  <td className="px-2 py-3 flex flex-wrap md:flex-nowrap md:justify-normal justify-center items-center gap-1">
                     <Link
-                      className="px-2 py-1 flex items-center gap-1 shadow-md bg-blue-900 hover:bg-blue-950 text-gray-200 rounded-md transition-all focus:outline-none focus:bg-blue-800"
+                      className="px-2 py-1 flex items-center justify-center gap-1 shadow-md bg-indigo-200 hover:bg-indigo-300 text-indigo-600 rounded-md transition-all focus:outline-none focus:bg-indigo-200 w-full md:w-auto"
                       href={"/products/edit/" + i._id}
                     >
                       <FiEdit />
-                      edit
+                      Edit
                     </Link>
                     <Link
-                      className="px-2 py-1 flex items-center gap-1 shadow-md bg-red-800 hover:bg-red-900 text-gray-200 rounded-md transition-all focus:outline-none focus:bg-red-800"
+                      className="px-2 py-1 flex items-center justify-center gap-1 shadow-md bg-red-200 hover:bg-red-300 text-red-700 rounded-md transition-all focus:outline-none focus:bg-red-200 w-full md:w-auto"
                       href={"/products/delete/" + i._id}
                     >
-                      <MdDelete className="text-gray-200" />
-                      delete
+                      <MdDelete className="text-red-500" />
+                      Delete
                     </Link>
                   </td>
                 </tr>
@@ -75,7 +70,7 @@ export default function Products() {
                 <td className="w-1/2 px-6 py-4 whitespace-nowrap border-r border-gray-300">
                   <div className="text-sm text-gray-500">No category found</div>
                 </td>
-                <td className="w-1/2 px-6 py-4 whitespace-nowrap  ">
+                <td className="w-1/2 px-6 py-4 whitespace-nowrap">
                   <div className="text-sm text-gray-500">---</div>
                 </td>
               </tr>

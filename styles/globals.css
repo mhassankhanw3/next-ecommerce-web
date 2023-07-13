@@ -8,7 +8,7 @@ img {
 }
 
 h1 {
-  @apply text-blue-900 font-semibold text-4xl mb-4 underline;
+  @apply text-gray-800 font-semibold text-3xl mb-2;
 }
 input,
 textarea {
@@ -22,7 +22,7 @@ textarea:focus {
   @apply border-blue-800 outline-none bg-gray-50;
 }
 label {
-  @apply text-blue-900 font-medium text-[18px];
+  @apply text-gray-600 font-medium text-[16px];
 }
 
 .btn-primary {
@@ -49,9 +49,9 @@ table.basic a:hover {
   @apply bg-red-700 transition-all;
 }
 
-.label:hover .icon {
+/* .label:hover .icon {
   color: #2563eb;
   transition: 0.3s;
-}
+} */
 
 /* ===================== Spinner =============== */

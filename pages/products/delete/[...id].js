@@ -34,13 +34,13 @@ export default function DeleteProductPage() {
     <Layout>
       <h1 className="text-center">
         Do you really want to delete &quot;
-        <span className="font-bold text-red-800 ">{productInfo?.title}</span>
+        <span className="font-bold text-[#9f1239] ">{productInfo?.title}</span>
         &quot;?
       </h1>
       <div className="flex items-center gap-2 justify-center">
         <button
           onClick={deleteProduct}
-          className="bg-red-700 hover:bg-red-800 transition-all rounded-md px-4 py-1 text-[18px] text-gray-200"
+          className="bg-[#9f1239] hover:bg-red-900 transition-all rounded-md px-4 py-1 text-[18px] text-gray-100"
         >
           Yes
         </button>

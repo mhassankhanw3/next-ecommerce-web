@@ -1,9 +1,13 @@
 import { useSession, signIn, signOut } from "next-auth/react";
 import Nav from "../components/Nav";
 import { Toaster } from "react-hot-toast";
+import { useState } from "react";
+import { GiHamburgerMenu } from "react-icons/gi";
+import Logo from "./Logo";
 
 export default function Layout({ children }) {
   const { data: session } = useSession();
+  const [showNav, setShowNav] = useState(false);
 
   if (!session) {
     return (
@@ -18,11 +22,24 @@ export default function Layout({ children }) {
     );
   }
   return (
-    <div className="bg-blue-900 min-h-screen flex ">
-      <Nav />
-      <div className="bg-slate-200 flex-grow mt-2 mr-2 mb-2 rounded-lg px-4 py-6">
-        <Toaster />
-        {children}
+    <div className="bg-gray-100 min-h-screen ">
+      <div className="md:hidden flex items-center p-4">
+        <button
+          onClick={() => setShowNav(true)}
+          className="text-gray-900 text-[24px] font-light "
+        >
+          <GiHamburgerMenu />
+        </button>
+        <div className="flex grow justify-center mr-6 ">
+          <Logo />
+        </div>
+      </div>
+      <div className="flex">
+        <Nav showNav={showNav} />
+        <div className="flex-grow p-4">
+          <Toaster />
+          {children}
+        </div>
       </div>
     </div>
   );

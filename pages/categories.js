@@ -23,12 +23,12 @@ function Categories({ swal }) {
     input:
       "border border-gray-300 rounded-lg px-4 py-2 mb-0 focus:outline-none focus:bg-gray-50 focus:border-blue-800",
     delete:
-      "px-2 py-1 flex items-center gap-1 shadow-md bg-red-800 hover:bg-red-900 text-gray-200 rounded-md transition-all focus:outline-none focus:bg-red-800",
-    edit: "px-2 py-1 flex items-center gap-1 shadow-md bg-blue-900 hover:bg-blue-950 text-gray-200 rounded-md transition-all focus:outline-none focus:bg-blue-800",
+      "px-2 py-1 flex items-center justify-center gap-1 shadow-md bg-red-200 hover:bg-red-300 text-red-700 rounded-md transition-all focus:outline-none focus:bg-red-200 w-full md:w-auto",
+    edit: "px-2 py-1 flex items-center justify-center gap-1 shadow-md bg-indigo-200 hover:bg-indigo-300 text-indigo-700 rounded-md transition-all focus:outline-none focus:bg-indigo-200 w-full md:w-auto",
     default_btn:
-      "bg-gray-500 hover:bg-gray-600 transition-all px-3 py-2 rounded-lg text-gray-100",
+      "bg-gray-200 hover:bg-gray-300 focus:bg-gray-200 focus:outline-none transition-all px-3 py-2 rounded-lg text-gray-600 mb-1",
     remove:
-      "flex items-center gap-1 text-center bg-red-800 hover:bg-red-900 focus:bg-red-800 transition-all rounded-md px-2 py-2 text-white",
+      "flex items-center justify-center gap-1 text-center bg-red-200 hover:bg-red-300 focus:bg-red-200 transition-all rounded-md px-4 py-2 text-red-700 w-full md:w-auto",
   };
 
   const fetchCategories = async () => {
@@ -85,7 +85,7 @@ function Categories({ swal }) {
   };
 
   const deleteCategory = async (category) => {
-    setLoading(true);
+    setLoading(false);
     try {
       const result = await swal.fire({
         title: "Are you sure?",
@@ -197,7 +197,10 @@ function Categories({ swal }) {
           </button>
           {properties.length > 0 &&
             properties.map((property, index) => (
-              <div key={index} className="flex items-center gap-1 mt-[5px] ">
+              <div
+                key={index}
+                className="flex flex-wrap md:flex-nowrap items-center gap-1 mt-[5px] "
+              >
                 <input
                   value={property.name}
                   onChange={(ev) =>
@@ -226,10 +229,10 @@ function Categories({ swal }) {
               </div>
             ))}
         </div>
-        <div className="flex items-center gap-1 mt-4">
+        <div className="flex items-center gap-1 mt-3">
           <button
             type="submit"
-            className="px-6 py-2 shadow-lg transition-all bg-blue-900 text-white rounded-lg hover:bg-blue-950 focus:outline-none focus:bg-blue-800"
+            className="px-6 py-2 shadow-lg transition-all bg-indigo-200 text-indigo-600 rounded-lg hover:bg-indigo-300 focus:outline-none focus:bg-indigo-200 w-full md:w-auto"
           >
             Save
           </button>
@@ -242,7 +245,7 @@ function Categories({ swal }) {
                 setProperties([]);
               }}
               type="button"
-              className="px-6 py-2 shadow-lg bg-red-800 text-white rounded-lg hover:bg-red-900 focus:outline-none focus:bg-red-800"
+              className="px-6 py-2 shadow-lg bg-red-200 text-red-600 rounded-lg hover:bg-red-300 focus:outline-none focus:bg-red-200"
             >
               cancel
             </button>
@@ -250,10 +253,10 @@ function Categories({ swal }) {
         </div>
       </form>
       <div className="mt-4">
-        <div className="bg-white shadow-lg overflow-hidden sm:rounded-lg">
+        <div className="bg-white shadow-lg overflow-hidden rounded-lg">
           {!editedCategory && (
             <table className="min-w-full divide-y divide-gray-200">
-              <thead className="bg-blue-900">
+              <thead className="bg-indigo-700">
                 <tr>
                   <td
                     scope="col"
@@ -298,7 +301,7 @@ function Categories({ swal }) {
                         </div>
                       </td>
                       <td className="w-1/4 px-6 py-1 whitespace-nowrap">
-                        <div className="flex items-center gap-2">
+                        <div className="flex flex-wrap md:flex-nowrap justify-center items-center gap-2">
                           <button
                             onClick={() => editCategory(category)}
                             className={styles.edit}

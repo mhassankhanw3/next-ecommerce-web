@@ -203,15 +203,19 @@ export default function ProductForm({
           propertiesToFill.map((v) => {
             console.log(v, "v");
             return (
-              <div>
-                <span className="font-medium block">{v?.name}:</span>
+              <div key={v?.name}>
+                <span className="font-medium block text-gray-600">
+                  {v?.name[0]?.toUpperCase() + v?.name.substring(1)}:
+                </span>
                 <select
                   value={productProperties[v?.name]}
                   onChange={(e) => setProductProp(v?.name, e.target.value)}
                   className="max-w-full w-[300px] py-2 px-2 rounded-lg bg-gray-100 border border-gray-300 focus:bg-gray-50 focus:outline-none focus:border-blue-900 "
                 >
                   {v.values.map((i) => (
-                    <option value={i}>{i}</option>
+                    <option key={i} value={i}>
+                      {i}
+                    </option>
                   ))}
                 </select>
               </div>
@@ -232,16 +236,11 @@ export default function ProductForm({
         >
           {!!images?.length &&
             images.map((link) => (
-              <div key={link} className="h-24">
-                <img
-                  src={
-                    link
-                      ? link
-                      : "https://www.generationsforpeace.org/wp-content/uploads/2018/03/empty.jpg"
-                  }
-                  alt=""
-                  className="rounded-lg "
-                />
+              <div
+                key={link}
+                className="h-24 shadow-sm  border border-gray-300 rounded-lg p-2 bg-white hover:shadow-lg transition-all focus:outline-none "
+              >
+                <img src={link} alt="" className="rounded-lg " />
               </div>
             ))}
         </ReactSortable>
@@ -251,18 +250,18 @@ export default function ProductForm({
             <Spinner />
           </div>
         )}
-        <label className="label w-24 h-24 rounded-md bg-gray-50 text-black font-normal text-[16px] hover:bg-gray-100 hover:text-blue-600 gap-1 transition-all flex items-center justify-center cursor-pointer ">
+        <label className="label w-24 h-24 rounded-md hover:rounded-lg bg-gray-50 text-indigo-800 font-normal text-[16px] hover:bg-gray-50 border border-indigo-800 gap-1 transition-all flex items-center justify-center cursor-pointer ">
           <span>
             {" "}
-            <AiOutlineCloudUpload className="text-[20px] text-gray-600 icon " />
+            <AiOutlineCloudUpload className="text-[20px] text-indigo-800 " />
           </span>
           Uplaod
           <input type="file" onChange={uploadImages} className="hidden" />
         </label>
       </div>
-      {!images?.length && (
-        <div className="font-medium mb-4 ">No photos in this product</div>
-      )}
+      <div className="font-medium mb-4">
+        {!images?.length && <div>No photos in this product</div>}
+      </div>
       <label>Product Description</label>
       <textarea
         placeholder="product description"
@@ -287,7 +286,7 @@ export default function ProductForm({
               !title || !selectCategory || !desc || !price ? "#9ca3af" : "",
           }}
           type="submit"
-          className="btn-primary "
+          className="bg-indigo-700 text-gray-200 rounded-md px-4 py-1 text-center text-[16px] hover:bg-indigo-800 transition-all"
         >
           save
         </button>
