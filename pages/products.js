@@ -5,10 +5,13 @@ import axios from "axios";
 import { MdDelete } from "react-icons/md";
 import { FiEdit } from "react-icons/fi";
 import { Spin } from "antd";
+import { useRouter } from "next/router";
+import { toast } from "react-hot-toast";
 
 export default function Products() {
   const [getProducts, setGetProducts] = useState([]);
   const [loading, setLoading] = useState(false);
+  const router = useRouter();
   useEffect(() => {
     setLoading(true);
     axios.get("/api/products").then((response) => {
@@ -16,14 +19,31 @@ export default function Products() {
       setLoading(false);
     });
   }, []);
+  const AddProductsPage = async () => {
+    router.push("/products/new");
+    setTimeout(() => {
+      toast(
+        "You have to create Category first for your product then select category for you products.",
+        {
+          icon: "👋",
+          duration: 8000,
+          style: {
+            borderRadius: "10px",
+            background: "#333",
+            color: "#fff",
+          },
+        }
+      );
+    }, 3000);
+  };
   return (
     <Layout>
-      <Link
+      <button
         className="bg-indigo-600 hover:bg-indigo-700 shadow-md hover:shadow-lg transition-all text-gray-200 rounded-md px-3 py-2"
-        href={"/products/new"}
+        onClick={AddProductsPage}
       >
         Add new Products
-      </Link>
+      </button>
       <h3 className="mt-2 text-[16px] text-gray-600 md:text-xl">
         If you are new to our ecommerce site, go to &quot;Add new
         products&quot;.

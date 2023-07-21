@@ -229,13 +229,15 @@ function Categories({ swal }) {
               </div>
             ))}
         </div>
-        <div className="flex items-center gap-1 mt-3">
-          <button
-            type="submit"
-            className="px-6 py-2 shadow-lg transition-all bg-indigo-200 text-indigo-600 rounded-lg hover:bg-indigo-300 focus:outline-none focus:bg-indigo-200 w-full md:w-auto"
-          >
-            Save
-          </button>
+        <div className="flex items-center gap-1">
+          {categoryName ? (
+            <button
+              type="submit"
+              className="mt-3 px-6 py-2 shadow-lg transition-all bg-indigo-200 text-indigo-600 hover:text-gray-100 rounded-lg hover:bg-indigo-300 focus:outline-none focus:bg-indigo-200 w-full md:w-auto active:scale-95 active:transition duration-100 "
+            >
+              Save
+            </button>
+          ) : null}
           {editedCategory && (
             <button
               onClick={() => {
@@ -290,12 +292,14 @@ function Categories({ swal }) {
                         </div>
                       </td>
                       <td className="w-[30%] px-6 py-4 whitespace-nowrap border-r border-gray-300">
-                        <div className="text-sm text-gray-900">
+                        <div className="text-sm text-black font-medium ">
                           {category?.parentCategory ? (
                             category?.parentCategory?.categoryName
                           ) : (
                             <div className="whitespace-nowrap ">
-                              <div className="text-sm">No categories found</div>
+                              <div className="text-sm underline font-normal text-gray-600 ">
+                                No categories found
+                              </div>
                             </div>
                           )}
                         </div>

@@ -184,7 +184,7 @@ export default function ProductForm({
           onChange={(e) => setSelectCategory(e.target.value)}
           className="max-w-md mt-1 py-2 px-2 rounded-lg bg-gray-100 border border-gray-300 focus:bg-gray-50 focus:outline-none focus:border-blue-900 "
         >
-          <option value="0">Uncategorized</option>
+          <option value="">Uncategorized</option>
           {categoriesData.length > 0 &&
             categoriesData.map((category) => (
               <option

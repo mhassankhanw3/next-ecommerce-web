@@ -12,18 +12,18 @@ export default function Home() {
         <div>
           <h2 className="font-semibold">
             Hello,{" "}
-            <span className="font-medium text-blue-600 text-[18px]">
-              <b>{session?.user?.name}</b>
+            <span className="font-medium text-[#7c3aed] text-[18px]">
+              <b>{session?.user?.name.toUpperCase()}</b>
             </span>
           </h2>
         </div>
-        <div className="flex items-center rounded-md bg-gray-100">
+        <div className="flex items-center rounded-md bg-[#ddd6fe]">
           <img
             className="w-8 h-8 mr-2 rounded-l-md"
             src={session?.user?.image}
             alt=""
           />
-          <span className="text-gray-800 font-medium mr-2">
+          <span className="text-[#3b0764] font-medium mr-2">
             {session?.user?.name}
           </span>
         </div>

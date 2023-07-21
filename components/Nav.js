@@ -16,12 +16,12 @@ import { signOut } from "next-auth/react";
 import Logo from "./Logo";
 
 export default function Nav({ showNav }) {
-  const inactiveLink = "flex items-center gap-1 p-1 text-gray-500";
+  const inactiveLink =
+    "flex items-center bg-[#ede9fe] hover:bg-[#ddd6fe] transition-all py-3 px-4 gap-1  rounded-md text-[#581c87]";
   const activeLink =
-    inactiveLink +
-    "flex items-center gap-1 bg-[#ede9fe] text-gray-900 rounded-sm py-[6px] px-[4px] transition-all ";
-  const inactiveIcon = "text-gray-500 text-[23px] flex items-center ";
-  const activeIcon = "text-indigo-800  ";
+    "flex items-center gap-3 border-[#7c3aed] border-l-[6px] bg-[#c4b5fd] text-white rounded-md shadow-md shadow-gray-400 py-5 px-4 transition-all ";
+  const inactiveIcon = "text-[#581c87] text-[23px] flex items-center ";
+  const activeIcon = "text-white text-[26px] font-bold  ";
 
   const router = useRouter();
   const { pathname } = router;
